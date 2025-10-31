@@ -2,8 +2,9 @@ package dao
 
 import (
 	"context"
-	"github.com/redis/go-redis/v9"
 	"go-Framework/app/model"
+
+	"github.com/redis/go-redis/v9"
 	"gorm.io/gorm"
 )
 

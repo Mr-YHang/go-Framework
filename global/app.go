@@ -1,9 +1,12 @@
 package global
 
 import (
+	"context"
+
+	"go-Framework/config"
+
 	"github.com/redis/go-redis/v9"
 	"github.com/rs/zerolog"
-	"go-Framework/config"
 	"gorm.io/gorm"
 )
 
@@ -15,3 +18,15 @@ type Application struct {
 }
 
 var App = new(Application)
+
+// LogWithContext 返回一个带有 context 信息的 logger（自动包含 request_id）
+func LogWithContext(ctx context.Context) *zerolog.Logger {
+	logger := App.Log.With().Logger()
+
+	// 从 context 中提取 request_id
+	if requestID, ok := ctx.Value("request_id").(string); ok {
+		logger = logger.With().Str("request_id", requestID).Logger()
+	}
+
+	return &logger
+}

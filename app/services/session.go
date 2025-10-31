@@ -22,8 +22,8 @@ func (s *Session) Login(ctx context.Context, r *req.LoginReq) (*model.User, erro
 	// 模拟做个查询
 	userInfo, err := s.UserDao.FindUserByName(ctx, r.Username)
 	if err != nil {
-		// 打印日志
-		global.App.Log.Err(err).Any("user_name", r.Username).Msg("用户登录失败")
+		// 打印日志（自动包含 request_id）
+		global.LogWithContext(ctx).Err(err).Str("user_name", r.Username).Msg("用户登录失败")
 
 		return nil, err
 	}

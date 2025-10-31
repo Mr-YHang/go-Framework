@@ -1,10 +1,11 @@
 package middleware
 
 import (
-	"github.com/gin-gonic/gin"
 	"go-Framework/app/resp"
 	"go-Framework/global"
 	"runtime/debug"
+
+	"github.com/gin-gonic/gin"
 )
 
 // Recover 捕获panic并恢复，防止程序崩溃
@@ -16,7 +17,7 @@ func Recover() gin.HandlerFunc {
 				stack := string(debug.Stack())
 
 				// 记录panic日志
-				global.App.Log.Error().
+				global.LogWithContext(c).Error().
 					Str("path", c.Request.URL.Path).
 					Str("method", c.Request.Method).
 					Str("client_ip", c.ClientIP()).

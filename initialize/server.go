@@ -19,10 +19,12 @@ import (
 )
 
 func RunServer() {
-	r := gin.Default()
+	// 使用 gin.New() 而不是 gin.Default()，避免重复的日志和 Recovery
+	r := gin.New()
 	
 	// 注册全局中间件
-	r.Use(middleware.Recover())
+	r.Use(middleware.Logger())  // 日志中间件（最外层）
+	r.Use(middleware.Recover()) // Recover中间件
 	
 	// 初始化dao
 	appDap := dao.NewDao()
