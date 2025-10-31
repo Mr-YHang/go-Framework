@@ -2,11 +2,11 @@ package initialize
 
 import (
 	"context"
-	"github.com/gin-gonic/gin"
 	"go-Framework/app/dao"
 	"go-Framework/app/handler"
 	"go-Framework/app/services"
 	"go-Framework/global"
+	"go-Framework/middleware"
 	"go-Framework/router"
 	"log"
 	"net/http"
@@ -14,10 +14,16 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
+
+	"github.com/gin-gonic/gin"
 )
 
 func RunServer() {
 	r := gin.Default()
+	
+	// 注册全局中间件
+	r.Use(middleware.Recover())
+	
 	// 初始化dao
 	appDap := dao.NewDao()
 	// 初始化服务层

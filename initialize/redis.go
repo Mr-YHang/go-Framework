@@ -21,3 +21,9 @@ func InitializeRedis() {
 
 	global.App.Redis = client
 }
+
+func CloseRedis() {
+	if global.App.Redis != nil {
+		global.App.Redis.Close()
+	}
+}

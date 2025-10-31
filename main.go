@@ -14,6 +14,9 @@ func main() {
 	initialize.InitializeLog(*global.App.Config)
 	// 初始化redis
 	initialize.InitializeRedis()
+	defer func() {
+		initialize.CloseRedis()
+	}()
 	// 初始化mysql
 	initialize.InitializeDB()
 	// 程序关闭前，释放数据库连接
